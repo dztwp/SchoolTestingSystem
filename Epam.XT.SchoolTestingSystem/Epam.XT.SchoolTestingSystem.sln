@@ -1,0 +1,78 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.XT.SchoolTestingSystem.WebPL", "Epam.XT.SchoolTestingSystem.WebPL\Epam.XT.SchoolTestingSystem.WebPL.csproj", "{D8F7AFE8-7586-49B1-9846-89589C2EBA1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.XT.SchoolTestingSystem.DAL.Interfaces", "Epam.XT.SchoolTestingSystem.DAL.Interfaces\Epam.XT.SchoolTestingSystem.DAL.Interfaces.csproj", "{F48D8D6D-3410-44EC-9F97-423E4F04E035}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.XT.SchoolTestingSystem.Common.Entities", "Epam.XT.SchoolTestingSystem.Common.Entities\Epam.XT.SchoolTestingSystem.Common.Entities.csproj", "{81873BCE-DA85-435F-8B8E-6F0573163317}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PL", "PL", "{F542986B-7129-41E7-96EF-12EF6D448702}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{8113943F-20C8-4DBA-9433-264916278CEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BLL", "BLL", "{4411B125-C4A3-495F-BD1A-8A2023AE1EB9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{4855EB53-5A63-4B5F-92CC-74C35D59A7F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.XT.SchoolTestingSystem.DAL", "Epam.XT.SchoolTestingSystem.DAL\Epam.XT.SchoolTestingSystem.DAL.csproj", "{400E58FD-998E-4180-B681-F4D613029EF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.XT.SchoolTestingSystem.Dependencies", "Epam.XT.SchoolTestingSystem.Dependencies\Epam.XT.SchoolTestingSystem.Dependencies.csproj", "{51FB0608-3EEE-4567-A3B5-5343A66BA434}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.XT.SchoolTestingSystem.BLL.Interfaces", "Epam.XT.SchooTestingSystem.BLL.Interfaces\Epam.XT.SchoolTestingSystem.BLL.Interfaces.csproj", "{5D346038-55E5-4C86-A3D5-347042002001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.XT.SchoolTestingSystem.BLL", "Epam.XT.SchoolTestingSystem.BLL\Epam.XT.SchoolTestingSystem.BLL.csproj", "{0CA200AE-E44B-4EE3-98FF-46B87346E748}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D8F7AFE8-7586-49B1-9846-89589C2EBA1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8F7AFE8-7586-49B1-9846-89589C2EBA1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8F7AFE8-7586-49B1-9846-89589C2EBA1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8F7AFE8-7586-49B1-9846-89589C2EBA1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F48D8D6D-3410-44EC-9F97-423E4F04E035}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F48D8D6D-3410-44EC-9F97-423E4F04E035}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F48D8D6D-3410-44EC-9F97-423E4F04E035}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F48D8D6D-3410-44EC-9F97-423E4F04E035}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81873BCE-DA85-435F-8B8E-6F0573163317}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81873BCE-DA85-435F-8B8E-6F0573163317}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81873BCE-DA85-435F-8B8E-6F0573163317}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81873BCE-DA85-435F-8B8E-6F0573163317}.Release|Any CPU.Build.0 = Release|Any CPU
+		{400E58FD-998E-4180-B681-F4D613029EF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{400E58FD-998E-4180-B681-F4D613029EF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{400E58FD-998E-4180-B681-F4D613029EF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{400E58FD-998E-4180-B681-F4D613029EF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51FB0608-3EEE-4567-A3B5-5343A66BA434}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51FB0608-3EEE-4567-A3B5-5343A66BA434}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51FB0608-3EEE-4567-A3B5-5343A66BA434}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51FB0608-3EEE-4567-A3B5-5343A66BA434}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D346038-55E5-4C86-A3D5-347042002001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D346038-55E5-4C86-A3D5-347042002001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D346038-55E5-4C86-A3D5-347042002001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D346038-55E5-4C86-A3D5-347042002001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CA200AE-E44B-4EE3-98FF-46B87346E748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CA200AE-E44B-4EE3-98FF-46B87346E748}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CA200AE-E44B-4EE3-98FF-46B87346E748}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CA200AE-E44B-4EE3-98FF-46B87346E748}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D8F7AFE8-7586-49B1-9846-89589C2EBA1E} = {F542986B-7129-41E7-96EF-12EF6D448702}
+		{F48D8D6D-3410-44EC-9F97-423E4F04E035} = {8113943F-20C8-4DBA-9433-264916278CEB}
+		{81873BCE-DA85-435F-8B8E-6F0573163317} = {4855EB53-5A63-4B5F-92CC-74C35D59A7F7}
+		{400E58FD-998E-4180-B681-F4D613029EF9} = {8113943F-20C8-4DBA-9433-264916278CEB}
+		{51FB0608-3EEE-4567-A3B5-5343A66BA434} = {4855EB53-5A63-4B5F-92CC-74C35D59A7F7}
+		{5D346038-55E5-4C86-A3D5-347042002001} = {4411B125-C4A3-495F-BD1A-8A2023AE1EB9}
+		{0CA200AE-E44B-4EE3-98FF-46B87346E748} = {4411B125-C4A3-495F-BD1A-8A2023AE1EB9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B85C58EE-F317-4E69-A9AA-0021F4C5CD28}
+	EndGlobalSection
+EndGlobal

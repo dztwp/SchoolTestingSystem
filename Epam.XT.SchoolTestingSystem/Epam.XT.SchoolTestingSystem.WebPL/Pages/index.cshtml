@@ -1,0 +1,42 @@
+﻿@using Epam.XT.SchoolTestingSystem.Dependencies;
+@using Epam.XT.SchoolTestingSystem.Common.Entities;
+@using Epam.XT.SchoolTestingSystem.BLL.Interfaces;
+@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+    PageData["Title"] = "Главная страница";
+    IUserBLL _userBLL;
+    User user=null;
+    if (User.Identity.IsAuthenticated)
+    {
+        _userBLL = DependencyResolver.Instance.userBLL;
+        user = _userBLL.GetUserByLogin(User.Identity.Name);
+    }
+    else
+    {
+        Response.Redirect("~/Pages/LoginAndRegister/SignIn");
+    }
+}
+<div class="container">
+    <div class="row">
+        <div>@user.Name </div>
+        <div>@user.Surname</div>
+        <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+            @if(User.IsInRole("Teacher"))
+            {
+            <form method="post">
+                <button id="createTest" type="button" class="btn btn-secondary">Создать тест</button>
+            </form>
+            }  
+            <button type="button" class="btn btn-secondary">Button</button>
+            <button type="button" class="btn btn-secondary">Button</button>
+            <button type="button" id="signOut" class="btn btn-secondary">SignOut</button>
+        </div>
+        <div>
+
+        </div>
+    </div>
+    <div class="col-sm-8">
+
+
+    </div>
+</div>

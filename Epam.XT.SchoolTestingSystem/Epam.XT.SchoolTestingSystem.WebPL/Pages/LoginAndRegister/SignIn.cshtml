@@ -1,0 +1,38 @@
+﻿@using Epam.XT.SchoolTestingSystem.WebPL.Models;
+@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+    Auth authSession = new Auth();
+    PageData["Title"] = "SignIn";
+}
+@if (IsPost)
+{
+    var login = Request["login"];
+    var password = Request["password"];
+    
+    if (authSession.CanLogin(login, password))
+    {
+        FormsAuthentication.SetAuthCookie(login, createPersistentCookie: true);
+        Response.Redirect("/Pages/index");
+    }
+}
+<div class="SignBlock container">
+    <header>
+        <h3>Login Page</h3>
+    </header>
+    <form method="post" class="row">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input name="login" required type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="Enter login">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input name="password" required type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div class="row">
+        <button type="button" id="Register" class="btn btn-primary">Register</button>
+    </div>
+    
+</div>

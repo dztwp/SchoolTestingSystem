@@ -1,0 +1,34 @@
+﻿@using Epam.XT.SchoolTestingSystem.Dependencies;
+@using Epam.XT.SchoolTestingSystem.Common.Entities;
+@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+}
+@if (IsPost)
+{
+    string description = Request["description"];
+    int timeToPass = int.Parse(Request["timeToPass"]);
+    int numberOfAnswers = int.Parse(Request["numberOfQuestions"]);
+    Response.Redirect(String.Format("~/Pages/Tests/QuestionCreation.cshtml?" +
+        "description={0}" +
+        "&timeToPass={1}" +
+        "&numberOfAnswers={2}", description, timeToPass, numberOfAnswers));
+
+}
+<div class="container">
+    <form method="post">
+        <div class="form-group">
+            <label id="descriptionInput">Введите название теста</label>
+            <input name="description" type="text" required class="form-control" for="descriptionInput">
+        </div>
+        <div class="form-group">
+            <label id="timeToDoInput">Введите время для выполнения</label>
+            <input name="timeToPass" type="number" class="form-control" for="timeToDoInput">
+        </div>
+        <div class="form-group">
+            <label id="numberOfAnswers">Введите количество вопросов вашего теста</label>
+            <input name="numberOfQuestions" type="number" class="form-control" for="numberOfAnswers">
+        </div>
+        <button type="submit" class="btn btn-primary">Добавить вопросы</button>
+    </form>
+</div>
+
