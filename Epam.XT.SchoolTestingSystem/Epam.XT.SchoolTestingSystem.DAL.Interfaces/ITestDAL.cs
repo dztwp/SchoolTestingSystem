@@ -9,8 +9,15 @@ namespace Epam.XT.SchoolTestingSystem.DAL.Interfaces
 {
     public interface ITestDAL
     {
-        bool IsTestDone(Guid id);
-        Test GetTestById(Guid id);
+        IEnumerable<string> GetAllTestsDescriptions();
+        IEnumerable<Result> GetUsersResults(Guid userId);
+        bool isTestAlreadyExist(string name);
+        Test GetTestParamsByDescription(string descriptions);
+        Test GetTestByDescription(string description);
         bool CreateTest(Test test);
+
+        int[]GetTestResultByUserId(Guid userId,Guid testId);
+
+        bool BindingTestToUser(Guid userId, Guid testId, int quontityOfRightAnswers, int quontityOfQuestions);
     }
 }

@@ -16,14 +16,50 @@ namespace Epam.XT.SchoolTestingSystem.BLL
         {
             _testDAL = testDAL;
         }
+
+        public bool BindingTestToUser(Guid userId, Guid testId, int quontityOfRightAnswers, int quontityOfQuestions)
+        {
+            return _testDAL.BindingTestToUser(userId, testId, quontityOfRightAnswers,quontityOfQuestions);
+        }
+
         public bool CreateTest(Test test)
         {
             return _testDAL.CreateTest(test);
         }
 
+        public IEnumerable<string> GetAllTestsDescriptions()
+        {
+            return _testDAL.GetAllTestsDescriptions();
+        }
+
+        public Test GetTestByDescription(string description)
+        {
+            return _testDAL.GetTestByDescription(description);
+        }
+
         public Test GetTestById(Guid id)
         {
             throw new NotImplementedException();
+        }
+
+        public Test GetTestParamsByDescription(string descriptions)
+        {
+            return _testDAL.GetTestParamsByDescription(descriptions);
+        }
+
+        public int[] GetTestResultByUserId(Guid userId, Guid testId)
+        {
+            return _testDAL.GetTestResultByUserId(userId, testId);
+        }
+
+        public IEnumerable<Result> GetUsersResults(Guid userId)
+        {
+            return _testDAL.GetUsersResults(userId);
+        }
+
+        public bool isTestAlreadyExist(string name)
+        {
+            return _testDAL.isTestAlreadyExist(name);
         }
 
         public bool IsTestDone(Guid id)

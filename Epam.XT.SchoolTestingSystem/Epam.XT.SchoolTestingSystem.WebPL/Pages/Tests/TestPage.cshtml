@@ -1,0 +1,26 @@
+﻿@using Epam.XT.SchoolTestingSystem.Dependencies;
+@using Epam.XT.SchoolTestingSystem.Common.Entities;
+@using Epam.XT.SchoolTestingSystem.BLL.Interfaces;
+@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+    var _testBLL = DependencyResolver.Instance.testBLL;
+    Test test = _testBLL.GetTestParamsByDescription(Request.QueryString["Description"]);
+}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-3">
+            <ul class="list-group">
+                <li class="list-group-item">Название теста: @test.Description</li>
+                <li class="list-group-item">Время на выполнение: @test.TimeToPass</li>
+                <li class="list-group-item">Количество вопросов: @test.NumberOfQuestions</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="btn-group col-sm-8 offset-2 mt-3" role="group" aria-label="Basic example">
+            <a class="btn btn-primary" href="~/Pages/Tests/TestExecution.cshtml?Description=@test.Description" role="button">Начать выполнение теста</a>
+            <a class="btn btn-primary" href="#" role="button">Редактировать тест</a>
+            <a class="btn btn-primary" href="#" role="button">Удалить тест</a>
+        </div>
+    </div>
+</div>

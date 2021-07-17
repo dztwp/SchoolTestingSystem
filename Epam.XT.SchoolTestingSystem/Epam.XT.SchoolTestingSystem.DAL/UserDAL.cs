@@ -39,7 +39,7 @@ namespace Epam.XT.SchoolTestingSystem.DAL
 
                 while (reader.Read())
                 {
-                    user = new User(reader["Name"].ToString(), reader["Surname"].ToString(), reader["Login"].ToString());
+                    user = new User(Guid.Parse(reader["Id"].ToString()),reader["Name"].ToString(), reader["Surname"].ToString(), reader["Login"].ToString());
                 }
                 return user;
             }

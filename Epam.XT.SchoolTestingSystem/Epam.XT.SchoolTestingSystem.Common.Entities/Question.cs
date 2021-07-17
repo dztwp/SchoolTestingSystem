@@ -11,11 +11,22 @@ namespace Epam.XT.SchoolTestingSystem.Common.Entities
         public Question(string description,int numberOfQuestion, int numberOfRightAnswer, string[] answers)
         {
             Id = Guid.NewGuid();
+            Description = description;
             NumberOfQuestion = numberOfQuestion;
             NumberOfRightAnswer = numberOfRightAnswer;
             Answers = answers;
             IsRight = false;
-        }   
+        }
+        public Question(Guid id,string description, int numberOfQuestion, int numberOfRightAnswer)
+        {
+            Id = id;
+            Description = description;
+            NumberOfQuestion = numberOfQuestion;
+            NumberOfRightAnswer = numberOfRightAnswer;
+            IsRight = false;
+        }
+
+
         public Guid Id { get; set; }
         public string Description { get; set; }
         public bool IsRight { get; set; }

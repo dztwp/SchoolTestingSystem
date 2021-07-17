@@ -27,6 +27,7 @@ namespace Epam.XT.SchoolTestingSystem.DAL
                 command.Parameters.AddWithValue("@id", test.Id);
                 command.Parameters.AddWithValue("@timeToComplete", test.TimeToPass);
                 command.Parameters.AddWithValue("@description", test.Description);
+                command.Parameters.AddWithValue("@numberOfQuestions", test.NumberOfQuestions);
 
                 _connection.Open();
                 command.ExecuteNonQuery();
@@ -52,6 +53,7 @@ namespace Epam.XT.SchoolTestingSystem.DAL
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
                 command.Parameters.AddWithValue("@id", questionArr[i].Id);
+                command.Parameters.AddWithValue("@description", questionArr[i].Description);
                 command.Parameters.AddWithValue("@numberOfQuestion", questionArr[i].NumberOfQuestion);
                 command.Parameters.AddWithValue("@numberOfRightAnswer", questionArr[i].NumberOfRightAnswer);
                 command.Parameters.AddWithValue("@IdTest", test.Id);
@@ -63,7 +65,7 @@ namespace Epam.XT.SchoolTestingSystem.DAL
                 if (!AddAnswersToQuestion(questionArr[i], test.Id))
                 {
                     //ToDO Exception
-                }       
+                }
             }
             return true;
 
@@ -99,9 +101,234 @@ namespace Epam.XT.SchoolTestingSystem.DAL
             throw new NotImplementedException();
         }
 
-        public bool IsTestDone(Guid id)
+        public IEnumerable<Test> GetAllTests()
         {
             throw new NotImplementedException();
+        }
+
+        public bool isTestAlreadyExist(string name)
+        {
+            var _connection = new SqlConnection(_connectionString);
+            using (_connection)
+            {
+                var stProc = "TestingSystem_IsTestExist";
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@description", name);
+                _connection.Open();
+
+
+                return (int)command.ExecuteScalar() == 1;
+
+            }
+        }
+
+        public Test GetTestParamsByDescription(string descriptions)
+        {
+            var _connection = new SqlConnection(_connectionString);
+            using (_connection)
+            {
+                Test test = null;
+                var stProc = "TestingSystem_GetTestParamsByDescription";
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@description", descriptions);
+                _connection.Open();
+                SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+                while (reader.Read())
+                {
+                    test = new Test(Guid.Parse(reader["Id"].ToString()),
+                        reader["Name"].ToString(),
+                        int.Parse(reader["NumberOfQuestions"].ToString()),
+                        int.Parse(reader["TimeToComplete"].ToString()));
+                }
+                return test;
+            }
+        }
+
+        public IEnumerable<string> GetAllTestsDescriptions()
+        {
+            List<string> testsDescriptions = new List<string>();
+            var _connection = new SqlConnection(_connectionString);
+            using (_connection)
+            {
+                var stProc = "TestingSystem_GetAllTestsDescriptions";
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                _connection.Open();
+                SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+                while (reader.Read())
+                {
+                    testsDescriptions.Add(reader["Name"].ToString());
+                }
+                return testsDescriptions;
+            }
+        }
+
+        public Test GetTestByDescription(string description)
+        {
+            var _connection = new SqlConnection(_connectionString);
+            Guid id = default;
+            string name = default;
+            int numberOfQuestions = default;
+            int timeToComplete = default;
+            using (_connection)
+            {
+                var stProc = "TestingSystem_GetTestByDescription";
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@description", description);
+                _connection.Open();
+                SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+                while (reader.Read())
+                {
+                    id = Guid.Parse(reader["Id"].ToString());
+                    name = reader["Name"].ToString();
+                    numberOfQuestions = int.Parse(reader["NumberOfQuestions"].ToString());
+                    timeToComplete = int.Parse(reader["TimeToComplete"].ToString());
+                }
+            }
+            return new Test(id, name, numberOfQuestions, timeToComplete, GetQuestionsById(id, numberOfQuestions));
+        }
+        private Question[] GetQuestionsById(Guid TestId, int numberOfQuestions)
+        {
+            Question[] arrOfQuestions = new Question[numberOfQuestions];
+            var _connection = new SqlConnection(_connectionString);
+            int counter = 0;
+            using (_connection)
+            {
+                var stProc = "TestingSystem_GetQuestionsById";
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@Id", TestId);
+                _connection.Open();
+                SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+                while (reader.Read())
+                {
+                    arrOfQuestions[counter] = new Question(
+                        Guid.Parse(reader["Id"].ToString()),
+                        reader["Description"].ToString(),
+                        int.Parse(reader["NumberOfQuestion"].ToString()),
+                        int.Parse(reader["NumberOfRightAnswer"].ToString()));
+                    counter++;
+                }
+            }
+            for (int i = 0; i < arrOfQuestions.Length; i++)
+            {
+                arrOfQuestions[i].Answers = GetAnswersByQuestionID(arrOfQuestions[i].Id);
+            }
+            return arrOfQuestions;
+        }
+        private string[] GetAnswersByQuestionID(Guid questionId)
+        {
+            string[] arrOfQuestions = new string[4];
+            var _connection = new SqlConnection(_connectionString);
+            using (_connection)
+            {
+                var stProc = "TestingSystem_GetAnswersByQuestionID";
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@Id", questionId);
+                _connection.Open();
+                SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+                while (reader.Read())
+                {
+                    arrOfQuestions[0] = reader["Answer1"].ToString();
+                    arrOfQuestions[1] = reader["Answer2"].ToString();
+                    arrOfQuestions[2] = reader["Answer3"].ToString();
+                    arrOfQuestions[3] = reader["Answer4"].ToString();
+                }
+            }
+            return arrOfQuestions;
+        }
+
+        public bool BindingTestToUser(Guid userId, Guid testId, int quontityOfRightAnswers, int quontityOfQuestions)
+        {
+
+            var _connection = new SqlConnection(_connectionString);
+            using (_connection)
+            {
+                var stProc = "TestingSystem_BindingTestToUser";
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@userId", userId);
+                command.Parameters.AddWithValue("@testId", testId);
+                command.Parameters.AddWithValue("@quontityOfRightAnswers", quontityOfRightAnswers);
+                command.Parameters.AddWithValue("@quontityOfQuestions", quontityOfQuestions);
+
+                _connection.Open();
+                return command.ExecuteNonQuery() == 1;
+            }
+
+        }
+
+        public int[] GetTestResultByUserId(Guid userId, Guid testId)
+        {
+            int[] arr = null;
+            var _connection = new SqlConnection(_connectionString);
+            using (_connection)
+            {
+                var stProc = "TestingSystem_GetTestResultByIds";
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@userId", userId);
+                command.Parameters.AddWithValue("@testId", testId);
+                _connection.Open();
+                SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+                while (reader.Read())
+                {
+                    arr = new int[] { int.Parse(reader["TestResult"].ToString()), int.Parse(reader["QuantityOfQuestions"].ToString()) };
+                }
+            }
+            return arr;
+        }
+
+        public IEnumerable<Result> GetUsersResults(Guid userId)
+        {
+            List<Result> listOfTests = new List<Result>();
+            var _connection = new SqlConnection(_connectionString);
+            using (_connection)
+            {
+                var stProc = "TestingSystem_GetUsersResults";
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@userId", userId);
+                _connection.Open();
+                SqlDataReader reader = command.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+                while (reader.Read())
+                {
+                    listOfTests.Add(new Result(
+                        Guid.Parse(reader["IdUser"].ToString()),
+                        Guid.Parse(reader["IdTest"].ToString()),
+                        reader["Name"].ToString()));
+                }
+            }
+            return listOfTests;
         }
     }
 }

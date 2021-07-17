@@ -4,39 +4,67 @@
 @{
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
     PageData["Title"] = "Главная страница";
-    IUserBLL _userBLL;
-    User user=null;
-    if (User.Identity.IsAuthenticated)
-    {
-        _userBLL = DependencyResolver.Instance.userBLL;
-        user = _userBLL.GetUserByLogin(User.Identity.Name);
-    }
-    else
-    {
-        Response.Redirect("~/Pages/LoginAndRegister/SignIn");
-    }
+    IUserBLL _userBLL = DependencyResolver.Instance.userBLL;
+    ITestBLL _testBLL = DependencyResolver.Instance.testBLL;
+    User user = _userBLL.GetUserByLogin(User.Identity.Name);
+    var userResults = _testBLL.GetUsersResults(user.Id);
+    Guid resultId;
+
 }
 <div class="container">
     <div class="row">
-        <div>@user.Name </div>
-        <div>@user.Surname</div>
-        <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
-            @if(User.IsInRole("Teacher"))
+        <div class="col-sm-4">
+            <div>@user.Name </div>
+            <div>@user.Surname</div>
+            <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                @if (User.IsInRole("Teacher"))
+                {
+                    <button id="createTest" type="button" class="btn btn-secondary">Создать тест</button>
+                }
+                <button type="button" class="btn btn-secondary">Button</button>
+                <button type="button" class="btn btn-secondary">Button</button>
+                <button type="button" id="signOut" class="btn btn-secondary">SignOut</button>
+            </div>
+            <div>
+
+            </div>
+        </div>
+        <div class="col-sm-5 offset-2" style="border:2px solid black">
+            @if (User.IsInRole("Teacher"))
             {
-            <form method="post">
-                <button id="createTest" type="button" class="btn btn-secondary">Создать тест</button>
-            </form>
-            }  
-            <button type="button" class="btn btn-secondary">Button</button>
-            <button type="button" class="btn btn-secondary">Button</button>
-            <button type="button" id="signOut" class="btn btn-secondary">SignOut</button>
-        </div>
-        <div>
-
+                var allTests = _testBLL.GetAllTestsDescriptions();
+                <h3>Список тестов</h3>
+                <div class="col-sm-12">
+                    <ul class="nav flex-column">
+                        @foreach (var item in allTests)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/Pages/Tests/TestPage.cshtml?Description=@item">
+                                    @item
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
         </div>
     </div>
-    <div class="col-sm-8">
-
-
+    <div class="row">
+        <div class="col-sm-5 offset-6">
+            <h3>Список выполненных вами тестов</h3>
+            <div class="col-sm-12">
+                <ul class="nav flex-column">
+                    @foreach (var item in userResults)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Pages/Tests/TestResult.cshtml?Id1=@item.UserId&Id2=@item.TestId">
+                                @item.TestName;
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
     </div>
+
 </div>

@@ -8,8 +8,9 @@ namespace Epam.XT.SchoolTestingSystem.Common.Entities
 {
     public class User
     {
-        public User(string name,string surname,string login)
+        public User(Guid id,string name,string surname,string login)
         {
+            Id = id;
             Name = name;
             Surname = surname;
             Login = login;

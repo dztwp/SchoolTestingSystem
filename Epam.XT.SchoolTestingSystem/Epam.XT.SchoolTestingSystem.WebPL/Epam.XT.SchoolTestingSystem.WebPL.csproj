@@ -95,12 +95,16 @@
     <Content Include="Pages\LoginAndRegister\SignOut.cshtml" />
     <Content Include="Pages\Tests\TestCreation.cshtml" />
     <Content Include="Pages\Tests\QuestionCreation.cshtml" />
+    <Content Include="Pages\Tests\TestPage.cshtml" />
+    <Content Include="Pages\Tests\TestExecution.cshtml" />
+    <Content Include="Pages\Tests\TestResult.cshtml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
     <Content Include="Scripts\jquery-3.6.0.slim.js" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
     <Content Include="Scripts\RedirectScript.js" />
+    <Content Include="Scripts\timerForTestExecution.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
