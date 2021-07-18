@@ -32,7 +32,7 @@
             }
             @if(User.IsInRole("Teacher"))
             {
-            <a class="btn btn-primary" href="#" role="button">Редактировать тест</a>
+            <a class="btn btn-primary" href="~/Pages/Tests/TestUpdating?Description=@test.Description" role="button">Редактировать тест</a>
             <a class="btn btn-primary" href="~/Pages/Tests/TestDeletion?Id=@test.Id" role="button">Удалить тест</a>
             }
         </div>

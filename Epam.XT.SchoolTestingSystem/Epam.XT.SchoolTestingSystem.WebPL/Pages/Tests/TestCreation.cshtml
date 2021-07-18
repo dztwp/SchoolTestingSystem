@@ -1,16 +1,28 @@
-﻿@{
+﻿@using Epam.XT.SchoolTestingSystem.Common.Entities;
+@using Epam.XT.SchoolTestingSystem.Dependencies;
+@{
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+    var _testBLL = DependencyResolver.Instance.testBLL;
 }
 @if (IsPost)
 {
-    string description = Request["description"];
-    int timeToPass = int.Parse(Request["timeToPass"]);
-    int numberOfAnswers = int.Parse(Request["numberOfQuestions"]);
-    Response.Redirect(String.Format("~/Pages/Tests/QuestionCreation.cshtml?" +
-        "description={0}" +
-        "&timeToPass={1}" +
-        "&numberOfAnswers={2}", description, timeToPass, numberOfAnswers));
 
+    string description = Request["description"];
+    if (_testBLL.isTestAlreadyExist(description))
+    {
+        <div class="alert alert-warning" role="alert">
+            Тест с указанным названием уже существует, введите другое название
+        </div>
+    }
+    else
+    {
+        int timeToPass = int.Parse(Request["timeToPass"]);
+        int numberOfAnswers = int.Parse(Request["numberOfQuestions"]);
+        Response.Redirect(String.Format("~/Pages/Tests/QuestionCreation.cshtml?" +
+            "description={0}" +
+            "&timeToPass={1}" +
+            "&numberOfAnswers={2}", description, timeToPass, numberOfAnswers));
+    }
 }
 <div class="container">
     <form method="post">
@@ -24,7 +36,7 @@
         </div>
         <div class="form-group">
             <label id="numberOfAnswers">Введите количество вопросов вашего теста</label>
-            <input name="numberOfQuestions" type="number"  required class="form-control" for="numberOfAnswers">
+            <input name="numberOfQuestions" type="number" required class="form-control" for="numberOfAnswers">
         </div>
         <button type="submit" class="btn btn-primary">Добавить вопросы</button>
     </form>

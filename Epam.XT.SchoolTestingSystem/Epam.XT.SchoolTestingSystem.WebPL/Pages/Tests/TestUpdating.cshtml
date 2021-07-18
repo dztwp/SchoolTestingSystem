@@ -1,0 +1,33 @@
+﻿@using Epam.XT.SchoolTestingSystem.Common.Entities;
+@using Epam.XT.SchoolTestingSystem.Dependencies;
+
+@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+    string description = Request["description"];
+    var _testBLL=DependencyResolver.Instance.testBLL;
+    var test=_testBLL.GetTestByDescription(description);
+}
+@if (IsPost)
+{
+    string newDescription=Request["description"].ToString();
+    int timeToPass=int.Parse(Request["timeToPass"].ToString());
+    Response.Redirect(String.Format("~/Pages/Tests/QuestionUpdating.cshtml?" +
+        "description={0}" +
+        "&timeToPass={1}" +
+        "&numberOfAnswers={2}", newDescription, timeToPass, test.NumberOfQuestions));
+
+}
+<div class="container">
+    <form method="post">
+        <div class="form-group">
+            <label id="descriptionInput">Введите название теста</label>
+            <input name="description" type="text" required class="form-control" for="descriptionInput" value="@test.Description">
+        </div>
+        <div class="form-group">
+            <label id="timeToDoInput">Введите время для выполнения</label>
+            <input name="timeToPass" type="number" required class="form-control" for="timeToDoInput" value="@test.TimeToPass">
+        </div>
+        <button type="submit" class="btn btn-primary">Обновить вопросы</button>
+    </form>
+</div>
+

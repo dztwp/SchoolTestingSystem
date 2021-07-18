@@ -17,6 +17,7 @@ namespace Epam.XT.SchoolTestingSystem.DAL.Interfaces
         Test GetTestByDescription(string description);
         bool CreateTest(Test test);
         bool DeleteTest(Guid testId);
+        bool UpdateTest(Test test);
         int[]GetTestResultByUserId(Guid userId,Guid testId);
 
         bool BindingTestToUser(Guid userId, Guid testId, int quontityOfRightAnswers, int quontityOfQuestions);

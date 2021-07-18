@@ -1,13 +1,10 @@
 ﻿@using Epam.XT.SchoolTestingSystem.Common.Entities;
-@using Epam.XT.SchoolTestingSystem.BLL.Interfaces;
 @using Epam.XT.SchoolTestingSystem.Dependencies;
 
 @{
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
 
     var _testBLL = DependencyResolver.Instance.testBLL;
-
-    var testInfo = Request.Form.AllKeys;
 
     string testDescription = Request.QueryString["description"];
     int timeToPass = int.Parse(Request.QueryString["timeToPass"]);
@@ -17,30 +14,23 @@
 
 @if (IsPost)
 {
-    if (_testBLL.isTestAlreadyExist(testDescription))
+
+    Question[] questionArray = new Question[numberOfQuestions];
+    string description = Request["description"];
+    for (int i = 0; i < questionArray.Length; i++)
     {
-        <div class="alert alert-warning" role="alert">
-            Тест с указанным названием уже существует, введите другое название
-        </div>
-    }
-    else
-    {
-        Question[] questionArray = new Question[numberOfQuestions];
-        string description = Request["description"];
-        for (int i = 0; i < questionArray.Length; i++)
-        {
-            var questionDescription = Request[string.Format("questionDescription{0}", i + 1)];
-            var numberOfRightAnswer = int.Parse(Request[string.Format("exampleRadios{0}", i + 1)]);
-            var arrayOfAswers = new string[]{
+        var questionDescription = Request[string.Format("questionDescription{0}", i + 1)];
+        var numberOfRightAnswer = int.Parse(Request[string.Format("exampleRadios{0}", i + 1)]);
+        var arrayOfAswers = new string[]{
             Request[string.Format("inputRadios{0}1", i + 1)],
             Request[string.Format("inputRadios{0}2", i + 1)],
             Request[string.Format("inputRadios{0}3", i + 1)],
             Request[string.Format("inputRadios{0}4", i + 1)]};
-            questionArray[i] = new Question(questionDescription, i + 1, numberOfRightAnswer, arrayOfAswers);
-        }
-        _testBLL.CreateTest(new Test(description, timeToPass, questionArray,numberOfQuestions));
-        Response.Redirect("~/Pages/index.cshtml");
+        questionArray[i] = new Question(questionDescription, i + 1, numberOfRightAnswer, arrayOfAswers);
     }
+    _testBLL.CreateTest(new Test(description, timeToPass, questionArray, numberOfQuestions));
+    Response.Redirect("~/Pages/index.cshtml");
+
 
 
 }

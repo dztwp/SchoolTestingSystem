@@ -72,5 +72,9 @@ namespace Epam.XT.SchoolTestingSystem.BLL
             return _testDAL.isTestAlreadyExist(name);
         }
 
+        public bool UpdateTest(Test test)
+        {
+            return _testDAL.UpdateTest(test);
+        }
     }
 }

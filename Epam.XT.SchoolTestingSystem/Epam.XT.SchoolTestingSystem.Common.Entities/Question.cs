@@ -17,6 +17,15 @@ namespace Epam.XT.SchoolTestingSystem.Common.Entities
             Answers = answers;
             IsRight = false;
         }
+        public Question(Guid id,string description, int numberOfQuestion, int numberOfRightAnswer, string[] answers)
+        {
+            Id = id;
+            Description = description;
+            NumberOfQuestion = numberOfQuestion;
+            NumberOfRightAnswer = numberOfRightAnswer;
+            Answers = answers;
+            IsRight = false;
+        }
         public Question(Guid id,string description, int numberOfQuestion, int numberOfRightAnswer)
         {
             Id = id;

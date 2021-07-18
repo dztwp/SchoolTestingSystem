@@ -32,6 +32,15 @@ namespace Epam.XT.SchoolTestingSystem.Common.Entities
             QuestionArray = questionArray;
             NumberOfQuestions = numberOfQuestions;
         }
+        public Test(Guid id,string description, int timeToPass, Question[] questionArray, int numberOfQuestions)
+        {
+            Id = id;
+            Description = description;
+            TimeToPass = timeToPass;
+            IsDone = false;
+            QuestionArray = questionArray;
+            NumberOfQuestions = numberOfQuestions;
+        }
         public Guid Id { get; set; }
         public string Description { get; set; }
         public int TimeToPass { get; set; }
