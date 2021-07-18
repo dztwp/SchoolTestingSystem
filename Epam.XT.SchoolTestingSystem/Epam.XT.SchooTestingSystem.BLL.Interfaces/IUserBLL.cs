@@ -9,10 +9,11 @@ namespace Epam.XT.SchoolTestingSystem.BLL.Interfaces
 {
     public interface IUserBLL
     {
+        bool IsLoginExist(string login);
         bool AddUser(User user);
         User GetUserByLogin(string login);
         string[] GetUserRoles(string login);
-        bool IsUserExist(string login, string pass);
+        bool IsUserRegistered(string login, string pass);
         bool IsUserInRole(string login, string role);
     }
 }

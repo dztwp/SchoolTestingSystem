@@ -98,6 +98,7 @@
     <Content Include="Pages\Tests\TestPage.cshtml" />
     <Content Include="Pages\Tests\TestExecution.cshtml" />
     <Content Include="Pages\Tests\TestResult.cshtml" />
+    <Content Include="Pages\Tests\TestDeletion.cshtml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />

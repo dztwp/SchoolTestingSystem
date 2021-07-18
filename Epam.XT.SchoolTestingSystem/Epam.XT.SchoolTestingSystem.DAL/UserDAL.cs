@@ -17,7 +17,24 @@ namespace Epam.XT.SchoolTestingSystem.DAL
          
         public bool AddUser(User user)
         {
-            throw new NotImplementedException();
+            var _connection = new SqlConnection(_connectionString);
+            using (_connection)
+            {
+                var stProc = "TestingSystem_BindingTestToUser";
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@Id", user.Id);
+                command.Parameters.AddWithValue("@Login", user.Login);
+                command.Parameters.AddWithValue("@Password", user.HashedPassword);
+                command.Parameters.AddWithValue("@Name", user.Name);
+                command.Parameters.AddWithValue("@SurName", user.Surname);
+                command.Parameters.AddWithValue("@RoleName", user.Role);
+
+                _connection.Open();
+                return command.ExecuteNonQuery() == 1;
+            }
         }
 
 
@@ -82,12 +99,12 @@ namespace Epam.XT.SchoolTestingSystem.DAL
             throw new NotImplementedException();
         }
 
-        public bool IsUserExist(string login, string pass)
+        public bool IsUserRegistered(string login, string pass)
         {
             var _connection = new SqlConnection(_connectionString);
             using (_connection)
             {
-                var stProc = "TestingSystem_IsUserExist";
+                var stProc = "TestingSystem_IsUserRegistered";
                 var command = new SqlCommand(stProc, _connection)
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
@@ -114,6 +131,25 @@ namespace Epam.XT.SchoolTestingSystem.DAL
                 };
                 command.Parameters.AddWithValue("@login", login);
                 command.Parameters.AddWithValue("@role", role);
+                _connection.Open();
+
+
+                return (int)command.ExecuteScalar() == 1;
+
+            }
+        }
+
+        public bool IsLoginExist(string login)
+        {
+            var _connection = new SqlConnection(_connectionString);
+            using (_connection)
+            {
+                var stProc = "TestingSystem_IsLoginExist";
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@login", login);
                 _connection.Open();
 
 

@@ -7,8 +7,8 @@ namespace Epam.XT.SchoolTestingSystem.BLL.Interfaces
     public interface ITestBLL
     {
         IEnumerable<string> GetAllTestsDescriptions();
-        bool IsTestDone(Guid id);
         Test GetTestById(Guid id);
+        bool DeleteTest(Guid testId);
         bool CreateTest(Test test);
         bool isTestAlreadyExist(string name);
         Test GetTestParamsByDescription(string descriptions);
@@ -16,5 +16,6 @@ namespace Epam.XT.SchoolTestingSystem.BLL.Interfaces
         bool BindingTestToUser(Guid userId, Guid testId, int quontityOfRightAnswers, int quontityOfQuestions);
         int[] GetTestResultByUserId(Guid userId, Guid testId);
         IEnumerable<Result> GetUsersResults(Guid userId);
+        bool IsTestAlreadyDone(Guid userId, Guid testId);
     }
 }

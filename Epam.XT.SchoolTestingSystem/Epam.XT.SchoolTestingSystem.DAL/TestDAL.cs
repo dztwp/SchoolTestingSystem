@@ -81,7 +81,6 @@ namespace Epam.XT.SchoolTestingSystem.DAL
             {
                 CommandType = System.Data.CommandType.StoredProcedure
             };
-            command.Parameters.AddWithValue("@Id", new Guid());
             command.Parameters.AddWithValue("@answer1", answersArr[0]);
             command.Parameters.AddWithValue("@answer2", answersArr[1]);
             command.Parameters.AddWithValue("@answer3", answersArr[2]);
@@ -118,10 +117,7 @@ namespace Epam.XT.SchoolTestingSystem.DAL
                 };
                 command.Parameters.AddWithValue("@description", name);
                 _connection.Open();
-
-
                 return (int)command.ExecuteScalar() == 1;
-
             }
         }
 
@@ -329,6 +325,40 @@ namespace Epam.XT.SchoolTestingSystem.DAL
                 }
             }
             return listOfTests;
+        }
+
+        public bool IsTestAlreadyDone(Guid userId, Guid testId)
+        {
+            var _connection = new SqlConnection(_connectionString);
+            using (_connection)
+            {
+                var stProc = "TestingSystem_IsTestDone";
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@userId", userId);
+                command.Parameters.AddWithValue("@testId", testId);
+                _connection.Open();
+                return (int)command.ExecuteScalar() == 1;
+            }
+        }
+
+        public bool DeleteTest(Guid testId)
+        {
+            var _connection = new SqlConnection(_connectionString);
+            using (_connection)
+            {
+                var stProc = "TestingSystem_TestDeletion";
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@id", testId);
+                _connection.Open();
+                command.ExecuteNonQuery();
+                return true;
+            }
         }
     }
 }

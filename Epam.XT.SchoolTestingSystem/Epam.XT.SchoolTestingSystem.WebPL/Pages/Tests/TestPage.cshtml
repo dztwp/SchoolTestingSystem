@@ -4,7 +4,10 @@
 @{
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
     var _testBLL = DependencyResolver.Instance.testBLL;
+    var _userBLL = DependencyResolver.Instance.userBLL;
     Test test = _testBLL.GetTestParamsByDescription(Request.QueryString["Description"]);
+    User user = _userBLL.GetUserByLogin(User.Identity.Name);
+    bool isTestAlreadyDone = _testBLL.IsTestAlreadyDone(user.Id, test.Id);
 }
 <div class="container">
     <div class="row">
@@ -18,9 +21,20 @@
     </div>
     <div class="row">
         <div class="btn-group col-sm-8 offset-2 mt-3" role="group" aria-label="Basic example">
-            <a class="btn btn-primary" href="~/Pages/Tests/TestExecution.cshtml?Description=@test.Description" role="button">Начать выполнение теста</a>
+            @if (isTestAlreadyDone)
+            {
+                <label>Вы уже выполняли этот тест</label>
+                <a class="btn btn-primary" href="~/Pages/index.cshtml" role="button">Перейти на начальную страницу</a>
+            }
+            else
+            {
+                <a class="btn btn-primary" href="~/Pages/Tests/TestExecution.cshtml?Description=@test.Description" role="button">Начать выполнение теста</a>
+            }
+            @if(User.IsInRole("Teacher"))
+            {
             <a class="btn btn-primary" href="#" role="button">Редактировать тест</a>
-            <a class="btn btn-primary" href="#" role="button">Удалить тест</a>
+            <a class="btn btn-primary" href="~/Pages/Tests/TestDeletion?Id=@test.Id" role="button">Удалить тест</a>
+            }
         </div>
     </div>
 </div>

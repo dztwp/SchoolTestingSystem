@@ -14,7 +14,7 @@ namespace Epam.XT.SchoolTestingSystem.WebPL.Models
         
         public bool CanLogin(string login, string pass)
         {
-            if (_userBLL.IsUserExist(login, HashCreator.GetHash(pass)))
+            if (_userBLL.IsUserRegistered(login, HashCreator.GetHash(pass)))
                 return true;
             else 
                 return false;

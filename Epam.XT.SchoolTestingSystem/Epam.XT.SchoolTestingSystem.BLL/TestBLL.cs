@@ -27,6 +27,11 @@ namespace Epam.XT.SchoolTestingSystem.BLL
             return _testDAL.CreateTest(test);
         }
 
+        public bool DeleteTest(Guid testId)
+        {
+            return _testDAL.DeleteTest(testId);
+        }
+
         public IEnumerable<string> GetAllTestsDescriptions()
         {
             return _testDAL.GetAllTestsDescriptions();
@@ -57,14 +62,15 @@ namespace Epam.XT.SchoolTestingSystem.BLL
             return _testDAL.GetUsersResults(userId);
         }
 
+        public bool IsTestAlreadyDone(Guid userId, Guid testId)
+        {
+            return _testDAL.IsTestAlreadyDone(userId,testId);
+        }
+
         public bool isTestAlreadyExist(string name)
         {
             return _testDAL.isTestAlreadyExist(name);
         }
 
-        public bool IsTestDone(Guid id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -31,14 +31,19 @@ namespace Epam.XT.SchoolTestingSystem.BLL
             return _userDAL.GetUserRoles(login);
         }
 
-        public bool IsUserExist(string login, string pass)
+        public bool IsUserRegistered(string login, string pass)
         {
-            return _userDAL.IsUserExist(login, pass);
+            return _userDAL.IsUserRegistered(login, pass);
         }
 
         public bool IsUserInRole(string login, string role)
         {
             return _userDAL.IsUserInRole(login, role);
+        }
+
+        public bool IsLoginExist(string login)
+        {
+            return _userDAL.IsLoginExist(login);
         }
     }
 }

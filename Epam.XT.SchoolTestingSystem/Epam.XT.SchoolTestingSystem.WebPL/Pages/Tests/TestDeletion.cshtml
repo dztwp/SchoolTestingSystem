@@ -1,0 +1,26 @@
+﻿@using Epam.XT.SchoolTestingSystem.Dependencies;
+@using Epam.XT.SchoolTestingSystem.Common.Entities;
+@{
+    Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+    Guid testId = Guid.Parse(Request.QueryString["Id"]);
+    var _testBLL = DependencyResolver.Instance.testBLL;
+    bool isDeleted = _testBLL.DeleteTest(testId);
+}
+@if (isDeleted) 
+{ 
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 offset-3">
+                <label>Запись успешно удалена</label>
+                <label>Через несколько секунд вы будете перенаправлены на начальную страницу</label>
+                <div class="buttons">
+                    <div class="col-xs-12 col-sm-6">
+                        <a href="~/Pages/index.cshtml" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Перейти на главную страницу</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
