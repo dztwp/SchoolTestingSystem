@@ -42,10 +42,6 @@ namespace Epam.XT.SchoolTestingSystem.BLL
             return _testDAL.GetTestByDescription(description);
         }
 
-        public Test GetTestById(Guid id)
-        {
-            throw new NotImplementedException();
-        }
 
         public Test GetTestParamsByDescription(string descriptions)
         {

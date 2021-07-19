@@ -1,0 +1,24 @@
+﻿@using Epam.XT.SchoolTestingSystem.WebPL.Models;
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-3">
+            <div class="alert alert-danger text-center" role="alert">
+                <p class="text-center">@PageData["info"]</p>
+            </div>
+        </div>
+        <div class="col-sm-4 offset-4">
+            <a href="~/Pages/index.cshtml" class="btn btn-primary btn active" role="button" aria-pressed="true">Вернуться на главную страницу</a>
+        </div>
+    </div>
+</div>
+@{
+    if(PageData["param"]==null)
+    {
+        NLogger.logger.Info(PageData["info"]);
+    }
+    else
+    {
+        NLogger.logger.Info(PageData["info"]);
+        NLogger.logger.Info(PageData["info"]+"param - "+PageData["param"]);
+    }
+}

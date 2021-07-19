@@ -7,7 +7,6 @@ namespace Epam.XT.SchoolTestingSystem.BLL.Interfaces
     public interface ITestBLL
     {
         IEnumerable<string> GetAllTestsDescriptions();
-        Test GetTestById(Guid id);
         bool DeleteTest(Guid testId);
         bool CreateTest(Test test);
         bool UpdateTest(Test test);

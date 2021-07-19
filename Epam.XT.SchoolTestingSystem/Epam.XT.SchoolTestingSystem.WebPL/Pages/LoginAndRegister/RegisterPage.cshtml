@@ -6,6 +6,7 @@
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
     var _userBLL = DependencyResolver.Instance.userBLL;
     bool loginExist = false;
+    PageData["Title"] = "Страница регистрации";
 }
 @if (IsPost)
 {
@@ -29,22 +30,24 @@
 }
 <div class="container">
     <div class=row>
-        <form method="post" class="col-sm-8 offset-2">
+        <form method="post" class="col-sm-6 offset-3">
             <div class="form-group">
-                <label for="exampleFormControlInput1">Login</label>
-                <input name="login" type="text" required class="form-control" id="login">
+                <label for="exampleFormControlInput1">Введите логин пользователя</label>
+                <input name="login" type="text" required class="form-control" id="login" pattern="^[\w]{4,16}$">
+                <p><small class="form-text text-muted">Введите логин от 4 до 16 символов</small></p>
             </div>
             <div class="form-group">
-                <label for="exampleFormControlInput1">Password</label>
-                <input name="password" type="password" required class="form-control" id="exampleFormControlInput1">
+                <label for="exampleFormControlInput1">Пароль</label>
+                <input name="password" type="password" required class="form-control" id="exampleFormControlInput1" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{4,16}">
+                <p><small class="form-text text-muted">Пароль должен содержать цифры и буквы верхего и нижнего регистра латинского алфавита. Длина пароля от 4 до 16 символов</small> </p>
             </div>
             <div class="form-group">
-                <label for="exampleFormControlInput1">Name</label>
-                <input name="Name" type="text" required class="form-control" id="exampleFormControlInput1">
+                <label for="exampleFormControlInput1">Имя</label>
+                <input name="Name" type="text" required class="form-control" id="exampleFormControlInput1" pattern="^[a-zA-Zа-яА-Я]+$">
             </div>
             <div class="form-group">
-                <label for="exampleFormControlInput1">SurName</label>
-                <input name="SurName" type="text" required class="form-control" id="exampleFormControlInput1">
+                <label for="exampleFormControlInput1">Фамилия</label>
+                <input name="SurName" type="text" required class="form-control" id="exampleFormControlInput1"pattern="^[a-zA-Zа-яА-Я]+$">
             </div>
             <div class="form-group">
                 <div class="form-check">
@@ -61,7 +64,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
         </form>
     </div>
 </div>

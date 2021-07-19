@@ -6,21 +6,23 @@
     var _testBLL = DependencyResolver.Instance.testBLL;
     bool isDeleted = _testBLL.DeleteTest(testId);
 }
-@if (isDeleted) 
-{ 
+@if (isDeleted)
+{
     <div class="container">
         <div class="row">
             <div class="col-sm-6 offset-3">
                 <label>Запись успешно удалена</label>
-                <label>Через несколько секунд вы будете перенаправлены на начальную страницу</label>
                 <div class="buttons">
                     <div class="col-xs-12 col-sm-6">
-                        <a href="~/Pages/index.cshtml" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Перейти на главную страницу</a>
+                        <a href="~/Pages/index.cshtml" class="btn btn-primary btn active text-center" role="button" aria-pressed="true">Перейти на главную страницу</a>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+}
+else
+{
+    @RenderPage("~/Pages/Partial/_Error.cshtml", new { info = string.Format("Тест не был удален") , param=testId});
 }
 

@@ -12,6 +12,7 @@ namespace Epam.XT.SchoolTestingSystem.DAL.Interfaces
         bool AddUser(User user);
         User GetUserByLogin(string login);
 
+
         bool IsUserRegistered(string login, string pass);
         bool IsLoginExist(string login);
 

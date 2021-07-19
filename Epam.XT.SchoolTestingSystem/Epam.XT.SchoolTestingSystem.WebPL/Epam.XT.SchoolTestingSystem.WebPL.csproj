@@ -47,6 +47,13 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.10\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -88,6 +95,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".aspx\500.aspx" />
+    <Content Include=".aspx\404.aspx" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\LayoutDescription.css" />
     <Content Include="Content\SignRegDescription.css" />
@@ -101,6 +110,15 @@
     <Content Include="Pages\Tests\TestDeletion.cshtml" />
     <Content Include="Pages\Tests\QuestionUpdating.cshtml" />
     <Content Include="Pages\Tests\TestUpdating.cshtml" />
+    <Content Include="Pages\Errors\ErrorPage.html" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Pages\Partial\_Error.cshtml" />
+    <Content Include="Pages\Errors\404.html" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
@@ -114,6 +132,7 @@
   <ItemGroup>
     <Compile Include="Models\Auth.cs" />
     <Compile Include="Models\HashCreator.cs" />
+    <Compile Include="Models\NLogger.cs" />
     <Compile Include="Models\TestingSystemRoleProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -8,7 +8,6 @@
     ITestBLL _testBLL = DependencyResolver.Instance.testBLL;
     User user = _userBLL.GetUserByLogin(User.Identity.Name);
     var userResults = _testBLL.GetUsersResults(user.Id);
-    Guid resultId;
 
 }
 <div class="container">

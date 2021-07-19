@@ -30,20 +30,15 @@ namespace Epam.XT.SchoolTestingSystem.DAL
                 command.Parameters.AddWithValue("@numberOfQuestions", test.NumberOfQuestions);
 
                 _connection.Open();
-                command.ExecuteNonQuery();
+                return command.ExecuteNonQuery() > 0 && AddQuestionToTest(test);
+
             }
-            if (AddQuestionToTest(test))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+
         }
         private bool AddQuestionToTest(Test test)
         {
             Question[] questionArr = test.QuestionArray;
+            var isSuccess = true;
             var _connection = new SqlConnection(_connectionString);
             for (int i = 0; i < questionArr.Length; i++)
             {
@@ -59,12 +54,12 @@ namespace Epam.XT.SchoolTestingSystem.DAL
                 command.Parameters.AddWithValue("@IdTest", test.Id);
 
                 _connection.Open();
-                command.ExecuteNonQuery();
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
                 _connection.Close();
 
-                if (!AddAnswersToQuestion(questionArr[i], test.Id))
+                if (!isSuccess||!AddAnswersToQuestion(questionArr[i], test.Id))
                 {
-                    //ToDO Exception
+                    return false;
                 }
             }
             return true;
@@ -74,24 +69,23 @@ namespace Epam.XT.SchoolTestingSystem.DAL
         private bool AddAnswersToQuestion(Question question, Guid testId)
         {
             string[] answersArr = question.Answers;
-            var _connection = new SqlConnection(_connectionString);
-
-            var stProc = "TestingSystem_AddAnswersForQuestion";
-            var command = new SqlCommand(stProc, _connection)
+            using (var _connection = new SqlConnection(_connectionString))
             {
-                CommandType = System.Data.CommandType.StoredProcedure
-            };
-            command.Parameters.AddWithValue("@answer1", answersArr[0]);
-            command.Parameters.AddWithValue("@answer2", answersArr[1]);
-            command.Parameters.AddWithValue("@answer3", answersArr[2]);
-            command.Parameters.AddWithValue("@answer4", answersArr[3]);
-            command.Parameters.AddWithValue("@questionId", question.Id);
 
-            _connection.Open();
-            command.ExecuteNonQuery();
-            _connection.Close();
+                var stProc = "TestingSystem_AddAnswersForQuestion";
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@answer1", answersArr[0]);
+                command.Parameters.AddWithValue("@answer2", answersArr[1]);
+                command.Parameters.AddWithValue("@answer3", answersArr[2]);
+                command.Parameters.AddWithValue("@answer4", answersArr[3]);
+                command.Parameters.AddWithValue("@questionId", question.Id);
 
-            return true;
+                _connection.Open();
+                return command.ExecuteNonQuery() > 0;
+            }
 
         }
 
@@ -356,14 +350,14 @@ namespace Epam.XT.SchoolTestingSystem.DAL
                 };
                 command.Parameters.AddWithValue("@id", testId);
                 _connection.Open();
-                command.ExecuteNonQuery();
-                return true;
+                return command.ExecuteNonQuery() > 0;
             }
         }
 
         public bool UpdateTest(Test test)
         {
             var _connection = new SqlConnection(_connectionString);
+            int numOfReturnedSting = 0;
             using (_connection)
             {
                 var stProc = "TestingSystem_UpdateTest";
@@ -377,22 +371,16 @@ namespace Epam.XT.SchoolTestingSystem.DAL
                 command.Parameters.AddWithValue("@numberOfQuestions", test.NumberOfQuestions);
 
                 _connection.Open();
-                command.ExecuteNonQuery();
+                numOfReturnedSting = command.ExecuteNonQuery();
             }
-            if (UpdateQuestionOnTest(test))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return numOfReturnedSting > 0 && UpdateQuestionOnTest(test);
         }
 
         private bool UpdateQuestionOnTest(Test test)
         {
             Question[] questionArr = test.QuestionArray;
             var _connection = new SqlConnection(_connectionString);
+            var allIsRight = true;
             for (int i = 0; i < questionArr.Length; i++)
             {
                 var stProc = "TestingSystem_UpdateQuestion";
@@ -400,17 +388,20 @@ namespace Epam.XT.SchoolTestingSystem.DAL
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
-                command.Parameters.AddWithValue("@id", questionArr[i].Id);               
+                command.Parameters.AddWithValue("@id", questionArr[i].Id);
                 command.Parameters.AddWithValue("@numberOfQuestion", questionArr[i].NumberOfQuestion);
                 command.Parameters.AddWithValue("@numberOfRightAnswer", questionArr[i].NumberOfRightAnswer);
                 command.Parameters.AddWithValue("@description", questionArr[i].Description);
                 _connection.Open();
-                command.ExecuteNonQuery();
+                if (!(command.ExecuteNonQuery() > 0))
+                {
+                    allIsRight = false;
+                }
                 _connection.Close();
 
-                if (!UpdateAnswersInQuestion(questionArr[i], test.Id))
+                if (!allIsRight || !UpdateAnswersInQuestion(questionArr[i], test.Id))
                 {
-                    //ToDO Exception
+                    return false;
                 }
             }
             return true;
@@ -419,25 +410,24 @@ namespace Epam.XT.SchoolTestingSystem.DAL
         private bool UpdateAnswersInQuestion(Question question, Guid id)
         {
             string[] answersArr = question.Answers;
-            var _connection = new SqlConnection(_connectionString);
-
-            var stProc = "TestingSystem_UpdateAnswersForQuestion";
-            var command = new SqlCommand(stProc, _connection)
+            using (var _connection = new SqlConnection(_connectionString))
             {
-                CommandType = System.Data.CommandType.StoredProcedure
-            };
-            command.Parameters.AddWithValue("@answer1", answersArr[0]);
-            command.Parameters.AddWithValue("@answer2", answersArr[1]);
-            command.Parameters.AddWithValue("@answer3", answersArr[2]);
-            command.Parameters.AddWithValue("@answer4", answersArr[3]);
-            command.Parameters.AddWithValue("@questionId", question.Id);
 
-            _connection.Open();
-            command.ExecuteNonQuery();
-            _connection.Close();
+                var stProc = "TestingSystem_UpdateAnswersForQuestion";
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@answer1", answersArr[0]);
+                command.Parameters.AddWithValue("@answer2", answersArr[1]);
+                command.Parameters.AddWithValue("@answer3", answersArr[2]);
+                command.Parameters.AddWithValue("@answer4", answersArr[3]);
+                command.Parameters.AddWithValue("@questionId", question.Id);
 
-            return true;
-
+                _connection.Open();
+                return command.ExecuteNonQuery() > 0;
+            }
         }
+
     }
 }
