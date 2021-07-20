@@ -6,16 +6,20 @@
     var _userBLL = DependencyResolver.Instance.userBLL;
     string Description = Request.QueryString["Description"];
     bool isTestExist = true;
+    bool isEnterParamsValid = true;
     Test test = null;
     Timer timer = null;
-    if ((isTestExist = _testBLL.isTestAlreadyExist(Description)))
+    if (isEnterParamsValid = Description != null)
     {
-        test = _testBLL.GetTestByDescription(Description);
-        timer = new Timer();
-        timer.Interval = test.TimeToPass;
+        if ((isTestExist = _testBLL.isTestAlreadyExist(Description)))
+        {
+            test = _testBLL.GetTestByDescription(Description);
+            timer = new Timer();
+            timer.Interval = test.TimeToPass;
+        }
     }
-
 }
+
 @if (IsPost)
 {
     Guid userId = _userBLL.GetUserByLogin(User.Identity.Name).Id;
@@ -29,10 +33,12 @@
     }
     _testBLL.BindingTestToUser(userId, test.Id, rightAnswerCounter, test.NumberOfQuestions);
     Response.Redirect(string.Format("~/Pages/Tests/TestResult.cshtml?Id1={0}&Id2={1}", userId, test.Id));
-
-
 }
-@if (isTestExist)
+@if (!isEnterParamsValid)
+{
+    @RenderPage("~/Pages/Partial/_Error.cshtml", new { info = "Параметры запроса имеют некорректный формат", param = Request.Url+ " Пользователь пытался изменить GET запрос" });
+}
+else if (isTestExist)
 {
     <form method="post" name="executionForm">
         @for (int i = 0; i < test.NumberOfQuestions; i++)
@@ -66,9 +72,9 @@
         </div>
         <button type="submit" class="btn btn-primary">Проверить результат</button>
     </form>
-<script src="~/Scripts/timerForTestExecution.js"></script>
+    <script src="~/Scripts/timerForTestExecution.js"></script>
 }
 else
 {
-    @RenderPage("~/Pages/Partial/_Error.cshtml", new { info= string.Format("Тест с описанием {0} не существует",Description)});
+    @RenderPage("~/Pages/Partial/_Error.cshtml", new { info = string.Format("Тест с описанием {0} не существует", Description) });
 }

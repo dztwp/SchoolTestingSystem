@@ -4,23 +4,35 @@
 @{
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
     var _testBLL = DependencyResolver.Instance.testBLL;
-    Guid userId = Guid.Parse(Request.QueryString["Id1"]);
-    Guid testId = Guid.Parse(Request.QueryString["Id2"]);
-    int[] testResult = _testBLL.GetTestResultByUserId(userId,testId);
+    Guid userId = default(Guid);
+    Guid testId = default(Guid);
+    int[] testResult = null;
+    bool isEnterParamsValid = Guid.TryParse(Request.QueryString["Id1"], out userId) && Guid.TryParse(Request.QueryString["Id2"], out testId);
+    if (isEnterParamsValid)
+    {
+        testResult = _testBLL.GetTestResultByUserId(userId, testId);
+    }
 }
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
-            <h4 class="text">Ваш результат</h4>
-            <hr />
-            <ul class="resultList" style="list-style:none">
-                <li class="col-xs-12">Ваш результат: @testResult[0]/@testResult[1] </li>
-            </ul>
-            <div class="buttons">
-                <div class="col-xs-12 col-sm-6">
-                    <a href="~/Pages/index.cshtml" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Перейти на главную страницу</a>
+@if (!isEnterParamsValid)
+{
+    @RenderPage("~/Pages/Partial/_Error.cshtml", new { info = "Параметры запроса имеют некорректный формат", param = Request.Url + " Пользователь пытался изменить GET запрос" });
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+                <h4 class="text">Ваш результат</h4>
+                <hr />
+                <ul class="resultList" style="list-style:none">
+                    <li class="col-xs-12">Ваш результат: @testResult[0]/@testResult[1] </li>
+                </ul>
+                <div class="buttons">
+                    <div class="col-xs-12 col-sm-6">
+                        <a href="~/Pages/index.cshtml" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Перейти на главную страницу</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}

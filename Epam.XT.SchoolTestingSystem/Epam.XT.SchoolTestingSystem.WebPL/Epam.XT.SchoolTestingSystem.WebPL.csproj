@@ -100,6 +100,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\LayoutDescription.css" />
     <Content Include="Content\SignRegDescription.css" />
+    <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Pages\LoginAndRegister\SignOut.cshtml" />
     <Content Include="Pages\Tests\TestCreation.cshtml" />
@@ -130,6 +131,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Models\Auth.cs" />
     <Compile Include="Models\HashCreator.cs" />
     <Compile Include="Models\NLogger.cs" />

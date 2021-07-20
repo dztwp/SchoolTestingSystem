@@ -2,11 +2,24 @@
 @using Epam.XT.SchoolTestingSystem.Common.Entities;
 @{
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
-    Guid testId = Guid.Parse(Request.QueryString["Id"]);
     var _testBLL = DependencyResolver.Instance.testBLL;
-    bool isDeleted = _testBLL.DeleteTest(testId);
+    Guid testId;
+    bool isGuidParamValid = true;
+    bool isDeleted = false;
+    if (!(isGuidParamValid = Guid.TryParse(Request.QueryString["Id"], out testId)))
+    {
+        isGuidParamValid = false;
+    }
+    else
+    {
+        isDeleted = _testBLL.DeleteTest(testId);
+    }
 }
-@if (isDeleted)
+@if (!isGuidParamValid)
+{
+    @RenderPage("~/Pages/Partial/_Error.cshtml", new { info = "Параметры запроса имеют некорректный формат", param =Request.Url+ " Пользователь пытался изменить GET запрос" });
+}
+else if (isDeleted)
 {
     <div class="container">
         <div class="row">
@@ -23,6 +36,9 @@
 }
 else
 {
-    @RenderPage("~/Pages/Partial/_Error.cshtml", new { info = string.Format("Тест не был удален") , param=testId});
+    @RenderPage("~/Pages/Partial/_Error.cshtml", new { info = string.Format("Тест не был удален"), param = testId });
 }
+
+
+
 

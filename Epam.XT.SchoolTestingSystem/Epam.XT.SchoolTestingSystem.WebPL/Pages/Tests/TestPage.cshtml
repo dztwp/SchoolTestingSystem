@@ -5,16 +5,27 @@
     var _testBLL = DependencyResolver.Instance.testBLL;
     var _userBLL = DependencyResolver.Instance.userBLL;
     string Description = Request.QueryString["Description"];
-    Test test = _testBLL.GetTestParamsByDescription(Description);
+    Test test = null;
     bool isTestAlreadyDone = false;
-    bool testExist = _testBLL.isTestAlreadyExist(Description);
-    if (testExist)
+    bool testExist = false;
+    bool isEnterParamsValid = true;
+    if (isEnterParamsValid = Description != null)
     {
-        User user = _userBLL.GetUserByLogin(User.Identity.Name);
-        isTestAlreadyDone = _testBLL.IsTestAlreadyDone(user.Id, test.Id);
+        test = _testBLL.GetTestParamsByDescription(Description);
+        testExist = _testBLL.isTestAlreadyExist(Description);
+        if (testExist)
+        {
+            User user = _userBLL.GetUserByLogin(User.Identity.Name);
+            isTestAlreadyDone = _testBLL.IsTestAlreadyDone(user.Id, test.Id);
+        }
     }
+
 }
-@if (!testExist)
+@if (!isEnterParamsValid)
+{
+    @RenderPage("~/Pages/Partial/_Error.cshtml", new { info= "Параметры запроса имеют некорректный формат",param= Request.Url+" Пользователь пытался изменить GET запрос" });
+}
+else if (!testExist)
 {
     @RenderPage("~/Pages/Partial/_Error.cshtml", new { info = string.Format("Тест с описанием {0} не существует", Description) });
 }
