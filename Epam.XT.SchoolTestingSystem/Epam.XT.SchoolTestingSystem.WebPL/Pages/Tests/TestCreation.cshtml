@@ -2,6 +2,7 @@
 @using Epam.XT.SchoolTestingSystem.Dependencies;
 @{
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+    PageData["Title"] = "Создание теста";
     var _testBLL = DependencyResolver.Instance.testBLL;
 }
 @if (IsPost)
@@ -25,20 +26,26 @@
     }
 }
 <div class="container">
-    <form method="post">
-        <div class="form-group">
-            <label id="descriptionInput">Введите название теста</label>
-            <input name="description" type="text" required class="form-control" for="descriptionInput">
+    <div class="row">
+        <div class="col-12 col-sm-6 offset-sm-3">
+            <form method="post">
+                <div class="form-group">
+                    <label id="descriptionInput">Введите название теста</label>
+                    <input name="description" type="text" required class="form-control" for="descriptionInput">
+                </div>
+                <div class="form-group">
+                    <label id="timeToDoInput">Введите время для выполнения</label>
+                    <input name="timeToPass" type="number" required class="form-control" for="timeToDoInput" pattern="^[1-9]\d*$">
+                </div>
+                <div class="form-group">
+                    <label id="numberOfAnswers">Введите количество вопросов вашего теста</label>
+                    <input name="numberOfQuestions" type="number" required class="form-control" for="numberOfAnswers" pattern="^[1-9]\d*$">
+                </div>
+                <div class="col-8 offset-2 col-sm-6 offset-sm-3 mt-3 col-md-4 offset-md-4">
+                    <button type="submit" class="btn btn-primary">Добавить вопросы</button>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label id="timeToDoInput">Введите время для выполнения</label>
-            <input name="timeToPass" type="number" required class="form-control" for="timeToDoInput">
-        </div>
-        <div class="form-group">
-            <label id="numberOfAnswers">Введите количество вопросов вашего теста</label>
-            <input name="numberOfQuestions" type="number" required class="form-control" for="numberOfAnswers">
-        </div>
-        <button type="submit" class="btn btn-primary">Добавить вопросы</button>
-    </form>
+    </div>
 </div>
 

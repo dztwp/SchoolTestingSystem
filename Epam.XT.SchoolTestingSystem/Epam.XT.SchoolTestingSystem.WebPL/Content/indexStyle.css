@@ -1,0 +1,9 @@
+﻿.buttonGroup{
+    margin-top:3px;
+}
+.Tests{
+    border:2px solid black;
+    margin-bottom:10px;
+    overflow:hidden auto;
+    min-height:200px;
+}

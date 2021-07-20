@@ -17,7 +17,7 @@ namespace Epam.XT.SchoolTestingSystem.Common.Entities
         }
         public User(string name,string surname, string login, string pass, string role)
         {
-            Id = new Guid();
+            Id = Guid.NewGuid();
             Name = name;
             Surname = surname;
             Login = login;

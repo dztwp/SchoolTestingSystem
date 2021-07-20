@@ -2,6 +2,7 @@
 @using Epam.XT.SchoolTestingSystem.Common.Entities;
 @{
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+    PageData["Title"] = "Удаление теста";
     var _testBLL = DependencyResolver.Instance.testBLL;
     Guid testId;
     bool isGuidParamValid = true;

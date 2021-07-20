@@ -89,16 +89,6 @@ namespace Epam.XT.SchoolTestingSystem.DAL
 
         }
 
-        public Test GetTestById(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Test> GetAllTests()
-        {
-            throw new NotImplementedException();
-        }
-
         public bool isTestAlreadyExist(string name)
         {
             var _connection = new SqlConnection(_connectionString);

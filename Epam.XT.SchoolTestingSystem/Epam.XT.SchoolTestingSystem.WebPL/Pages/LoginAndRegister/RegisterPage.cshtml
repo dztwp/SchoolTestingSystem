@@ -24,47 +24,54 @@
 }
 @if (loginExist)
 {
-<div class="alert alert-warning" role="alert">
-    Данный пользователь уже существует
-</div>
+    <div class="alert alert-warning" role="alert">
+        Данный пользователь уже существует
+    </div>
 }
 <div class="container">
     <div class=row>
-        <form method="post" class="col-sm-6 offset-3">
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Введите логин пользователя</label>
-                <input name="login" type="text" required class="form-control" id="login" pattern="^[\w]{4,16}$">
-                <p><small class="form-text text-muted">Введите логин от 4 до 16 символов</small></p>
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Пароль</label>
-                <input name="password" type="password" required class="form-control" id="exampleFormControlInput1" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{4,16}">
-                <p><small class="form-text text-muted">Пароль должен содержать цифры и буквы верхего и нижнего регистра латинского алфавита. Длина пароля от 4 до 16 символов</small> </p>
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Имя</label>
-                <input name="Name" type="text" required class="form-control" id="exampleFormControlInput1" pattern="^[a-zA-Zа-яА-Я]+$">
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Фамилия</label>
-                <input name="SurName" type="text" required class="form-control" id="exampleFormControlInput1"pattern="^[a-zA-Zа-яА-Я]+$">
-            </div>
-            <div class="form-group">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="Teacher">
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        Учитель
-                    </label>
+        <div class="col-6 offset-3">
+            <header class="text-center">
+                <h3>Страница регистрации</h3>
+            </header>
+            <form method="post">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Введите логин пользователя</label>
+                    <input name="login" type="text" required class="form-control" id="login" pattern="^[\w]{4,16}$">
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked value="Apprentice">
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Ученик
-                    </label>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Пароль</label>
+                    <input name="password" type="password" required class="form-control" id="password" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{4,16}" >
                 </div>
-            </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Имя</label>
+                    <input name="Name" type="text" required class="form-control" id="textField1" pattern="^[a-zA-Zа-яА-Я]+$">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Фамилия</label>
+                    <input name="SurName" type="text" required class="form-control" id="textField2" pattern="^[a-zA-Zа-яА-Я]+$">
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="Teacher">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Учитель
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked value="Apprentice">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Ученик
+                        </label>
+                    </div>
+                </div>
 
-            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-        </form>
+                <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+            </form>
+        </div>
     </div>
 </div>
+@section ScriptsAndStyles{
+    <link href="~/Content/SignInAndReg.css" rel="stylesheet" />
+    <script src="~/Scripts/validateScripts/validateRegisterPage.js"></script>
+}

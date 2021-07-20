@@ -98,8 +98,11 @@
     <Content Include=".aspx\500.aspx" />
     <Content Include=".aspx\404.aspx" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\indexStyle.css" />
     <Content Include="Content\LayoutDescription.css" />
-    <Content Include="Content\SignRegDescription.css" />
+    <Content Include="Content\SignInAndReg.css" />
+    <Content Include="Content\stylesForTestExecution,Creation,AndUpdate.css" />
+    <Content Include="Content\testPageStyle.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Pages\LoginAndRegister\SignOut.cshtml" />
@@ -126,8 +129,8 @@
     <Content Include="Scripts\jquery-3.6.0.slim.js" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
     <Content Include="Scripts\RedirectScript.js" />
-    <Content Include="Scripts\scriptForTestUpdating.js" />
     <Content Include="Scripts\timerForTestExecution.js" />
+    <Content Include="Scripts\validateScripts\validateRegisterPage.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

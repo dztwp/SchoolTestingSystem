@@ -2,6 +2,7 @@
 @using Epam.XT.SchoolTestingSystem.Common.Entities;
 @{
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+    PageData["Title"] = "Страница теста";
     var _testBLL = DependencyResolver.Instance.testBLL;
     var _userBLL = DependencyResolver.Instance.userBLL;
     string Description = Request.QueryString["Description"];
@@ -23,7 +24,7 @@
 }
 @if (!isEnterParamsValid)
 {
-    @RenderPage("~/Pages/Partial/_Error.cshtml", new { info= "Параметры запроса имеют некорректный формат",param= Request.Url+" Пользователь пытался изменить GET запрос" });
+    @RenderPage("~/Pages/Partial/_Error.cshtml", new { info = "Параметры запроса имеют некорректный формат", param = Request.Url + " Пользователь пытался изменить GET запрос" });
 }
 else if (!testExist)
 {
@@ -33,7 +34,7 @@ else
 {
     <div class="container">
         <div class="row">
-            <div class="col-sm-6 offset-3">
+            <div class="col-sm-8 col-12 offset-sm-2 col-md-6 offset-md-3">
                 <ul class="list-group">
                     <li class="list-group-item">Название теста: @test.Description</li>
                     <li class="list-group-item">Время на выполнение: @test.TimeToPass</li>
@@ -42,22 +43,27 @@ else
             </div>
         </div>
         <div class="row">
-            <div class="btn-group col-sm-8 offset-2 mt-3" role="group" aria-label="Basic example">
-                @if (isTestAlreadyDone)
-                {
-                    <label>Вы уже выполняли этот тест</label>
-                    <a class="btn btn-primary" href="~/Pages/index.cshtml" role="button">Перейти на начальную страницу</a>
-                }
-                else
-                {
-                    <a class="btn btn-primary" href="~/Pages/Tests/TestExecution.cshtml?Description=@test.Description" role="button">Начать выполнение теста</a>
-                }
-                @if (User.IsInRole("Teacher"))
-                {
-                    <a class="btn btn-primary" href="~/Pages/Tests/TestUpdating?Description=@test.Description" role="button">Редактировать тест</a>
-                    <a class="btn btn-primary" href="~/Pages/Tests/TestDeletion?Id=@test.Id" role="button">Удалить тест</a>
-                }
+            <div class="col-sm-8 col-12 offset-2 col-md-6 offset-md-3">
+                <div class="btn-group col-sm-8 offset-sm-2 col-8" role="group" aria-label="Basic example">
+                    @if (isTestAlreadyDone)
+                    {
+                        <label>Вы уже выполняли этот тест</label>
+                        <a class="btn btn-primary" href="~/Pages/index.cshtml" role="button">Перейти на начальную страницу</a>
+                    }
+                    else if (User.IsInRole("Apprentice"))
+                    {
+                        <a class="btn btn-primary" href="~/Pages/Tests/TestExecution.cshtml?Description=@test.Description" role="button">Начать выполнение теста</a>
+                    }
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        <a class="btn btn-primary" href="~/Pages/Tests/TestUpdating?Description=@test.Description" role="button">Редактировать тест</a>
+                        <a class="btn btn-primary" href="~/Pages/Tests/TestDeletion?Id=@test.Id" role="button">Удалить тест</a>
+                    }
+                </div>
             </div>
         </div>
     </div>
+}
+@section ScriptsAndStyles{
+    <link href="~/Content/testPageStyle.css" rel="stylesheet" />
 }

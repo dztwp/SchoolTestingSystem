@@ -20,7 +20,7 @@ namespace Epam.XT.SchoolTestingSystem.DAL
             var _connection = new SqlConnection(_connectionString);
             using (_connection)
             {
-                var stProc = "TestingSystem_BindingTestToUser";
+                var stProc = "TestingSystem_AddUser";
                 var command = new SqlCommand(stProc, _connection)
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
@@ -33,7 +33,7 @@ namespace Epam.XT.SchoolTestingSystem.DAL
                 command.Parameters.AddWithValue("@RoleName", user.Role);
 
                 _connection.Open();
-                return command.ExecuteNonQuery() == 1;
+                return command.ExecuteNonQuery() > 0;
             }
         }
 

@@ -8,56 +8,41 @@
     ITestBLL _testBLL = DependencyResolver.Instance.testBLL;
     User user = _userBLL.GetUserByLogin(User.Identity.Name);
     var userResults = _testBLL.GetUsersResults(user.Id);
+    string role = _userBLL.GetUserRoles(user.Login)[0];
 
 }
 <div class="container">
     <div class="row">
-        <div class="col-sm-4">
-            <div>@user.Name </div>
-            <div>@user.Surname</div>
-            <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+        <div class="col-12 col-sm-5">
+            <div class=" col-12 col-sm-6">
+                <ul class="list-group col-12">
+                    <li class="list-group-item">Логин - @user.Login</li>
+                    <li class="list-group-item">Имя - @user.Name</li>
+                    <li class="list-group-item">Отчество - @user.Surname</li>
+                    <li class="list-group-item">Роль - @role</li>
+                </ul>
+            </div>
+            <div class="btn-group-vertical col-12 col-sm-6 buttonGroup" role="group" aria-label="Vertical button group">
                 @if (User.IsInRole("Teacher"))
                 {
                     <button id="createTest" type="button" class="btn btn-secondary">Создать тест</button>
                 }
-                <button type="button" class="btn btn-secondary">Button</button>
-                <button type="button" class="btn btn-secondary">Button</button>
-                <button type="button" id="signOut" class="btn btn-secondary">SignOut</button>
+                <button type="button" id="signOut" class="btn btn-secondary">Выйти</button>
             </div>
             <div>
 
             </div>
         </div>
-        <div class="col-sm-5 offset-2" style="border:2px solid black">
-            @if (User.IsInRole("Teacher"))
-            {
-                var allTests = _testBLL.GetAllTestsDescriptions();
-                <h3>Список тестов</h3>
-                <div class="col-sm-12">
-                    <ul class="nav flex-column">
-                        @foreach (var item in allTests)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" href="~/Pages/Tests/TestPage.cshtml?Description=@item">
-                                    @item
-                                </a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            }
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-5 offset-6">
-            <h3>Список выполненных вами тестов</h3>
+        <div class="col-sm-4 col-12 offset-sm-2 Tests">
+            @{var allTests = _testBLL.GetAllTestsDescriptions(); }
+            <h4>Список тестов</h4>
             <div class="col-sm-12">
                 <ul class="nav flex-column">
-                    @foreach (var item in userResults)
+                    @foreach (var item in allTests)
                     {
                         <li class="nav-item">
-                            <a class="nav-link" href="~/Pages/Tests/TestResult.cshtml?Id1=@item.UserId&Id2=@item.TestId">
-                                @item.TestName;
+                            <a class="nav-link" href="~/Pages/Tests/TestPage.cshtml?Description=@item">
+                                @item
                             </a>
                         </li>
                     }
@@ -65,5 +50,27 @@
             </div>
         </div>
     </div>
-
+    @if (User.IsInRole("Apprentice"))
+    {
+        <div class="row">
+            <div class="col-sm-4 offset-sm-7 col-12 Tests" >
+                <h4>Список выполненных вами тестов</h4>
+                <div class="col-sm-12">
+                    <ul class="nav flex-column">
+                        @foreach (var item in userResults)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="~/Pages/Tests/TestResult.cshtml?Id1=@item.UserId&Id2=@item.TestId">
+                                    @item.TestName
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
 </div>
+@section ScriptsAndStyles{
+    <link href="~/Content/indexStyle.css" rel="stylesheet" />
+}

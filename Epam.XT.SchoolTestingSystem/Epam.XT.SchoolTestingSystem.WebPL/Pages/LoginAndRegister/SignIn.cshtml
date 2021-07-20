@@ -2,7 +2,7 @@
 @{
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
     Auth authSession = new Auth();
-    PageData["Title"] = "SignIn";
+    PageData["Title"] = "Страница входа";
 }
 @if (IsPost)
 {
@@ -15,31 +15,32 @@
         Response.Redirect("/Pages/index");
     }
 }
-<div class="SignBlock container">   
+<div class=" container">   
     <div class="row">
-        <div class="col-sm-6 offset-3">
+        <div class="col-6 offset-3 SignBlock">
             <header class="text-center">
-                <h3>Страница входа</h3>
+                <h3>Вход в систему</h3>
             </header>
             <form method="post">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Логин</label>
                     <input name="login" required type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="Введите логин">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Пароль</label>
                     <input name="password" required type="password" class="form-control" id="exampleInputPassword1" placeholder="Введите пароль">
                 </div>
-                <div class="col-sm-4 offset-4 mt-3">
+                <div class="col-12 col-sm-6 offset-sm-3 buttonDescription">
                     <button type="submit" class="btn btn-primary">Войти</button>
                 </div>
+                <div class="col-12 col-sm-6 offset-sm-3  buttonDescription">
+                    <button type="button" id="Register" class="btn btn-primary">Регистрация</button>
+                </div>
             </form>
-            <div class="col-sm-4 offset-4 mt-3">
-                <button type="button" id="Register" class="btn btn-primary">Регистрация</button>
-            </div>
+            
         </div>
     </div>
-
-    
 </div>
+@section ScriptsAndStyles{
+    <link href="~/Content/SignInAndReg.css" rel="stylesheet" />
+    }

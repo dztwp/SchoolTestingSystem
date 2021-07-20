@@ -1,0 +1,18 @@
+﻿.SignBlock {
+    padding: 10px;
+    border: 2px solid black;
+}
+
+.buttonDescription {
+    text-align: center;
+}
+
+    .buttonDescription > button {
+        width: 120px;
+        margin-top: 7px;
+        text-align: center;
+    }
+
+button::after {
+    color: deepskyblue;
+}

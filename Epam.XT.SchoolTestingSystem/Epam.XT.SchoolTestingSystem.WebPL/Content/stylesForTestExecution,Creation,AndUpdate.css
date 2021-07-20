@@ -1,0 +1,16 @@
+﻿.form-group>.form-check{
+
+    margin: 0 10px 0 10px;
+}
+.form-group {
+    margin-bottom: 6px;
+    border: 2px solid grey;
+    border-radius: 3px 3px;
+    padding:5px;
+}
+.question{
+    text-align:center;
+}
+.h3 {
+    text-align: center;
+}

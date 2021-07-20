@@ -3,6 +3,7 @@
 
 @{
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+    PageData["Title"] = "Обновление теста";
     string description = Request["description"];
     bool isDescriptionValid = false;
     var _testBLL = DependencyResolver.Instance.testBLL;
@@ -29,18 +30,24 @@
 }
 else
 {
-    <div class="container">
-        <form method="post">
-            <div class="form-group">
-                <label id="descriptionInput">Введите название теста</label>
-                <input name="description" type="text" required class="form-control" for="descriptionInput" value="@test.Description">
-            </div>
-            <div class="form-group">
-                <label id="timeToDoInput">Введите время для выполнения</label>
-                <input name="timeToPass" type="number" required class="form-control" for="timeToDoInput" value="@test.TimeToPass">
-            </div>
-            <button type="submit" class="btn btn-primary">Обновить вопросы</button>
-        </form>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-6 offset-sm-3">
+            <form method="post">
+                <div class="form-group">
+                    <label id="descriptionInput">Введите название теста</label>
+                    <input name="description" type="text" required class="form-control" for="descriptionInput" value="@test.Description">
+                </div>
+                <div class="form-group">
+                    <label id="timeToDoInput">Введите время для выполнения</label>
+                    <input name="timeToPass" type="number" required class="form-control" for="timeToDoInput" value="@test.TimeToPass" pattern="^[1-9]\d*$">
+                </div>
+                <div class="col-8 offset-2 col-sm-6 offset-sm-3 mt-3 col-md-4 offset-md-4">
+                    <button type="submit" class="btn btn-primary">Обновить вопросы</button>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
 }
 

@@ -2,6 +2,7 @@
 @using Epam.XT.SchoolTestingSystem.Common.Entities;
 @{
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+    PageData["Title"] = "Выполнение теста";
     var _testBLL = DependencyResolver.Instance.testBLL;
     var _userBLL = DependencyResolver.Instance.userBLL;
     string Description = Request.QueryString["Description"];
@@ -36,43 +37,60 @@
 }
 @if (!isEnterParamsValid)
 {
-    @RenderPage("~/Pages/Partial/_Error.cshtml", new { info = "Параметры запроса имеют некорректный формат", param = Request.Url+ " Пользователь пытался изменить GET запрос" });
+    @RenderPage("~/Pages/Partial/_Error.cshtml", new { info = "Параметры запроса имеют некорректный формат", param = Request.Url + " Пользователь пытался изменить GET запрос" });
 }
 else if (isTestExist)
 {
-    <form method="post" name="executionForm">
-        @for (int i = 0; i < test.NumberOfQuestions; i++)
-        {
-            <div class="form-group">
-                <div>
-                    <label name="questionDescription@(i + 1)" id="QuestionDescription">@test.QuestionArray[0].Description</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios@(i + 1)" id="Radios@(i + 1)1" value="1" />
-                    <label class="form-check-label" for="Radios@(i + 1)1">@test.QuestionArray[i].Answers[0]</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios@(i + 1)" id="Radios@(i + 1)2" value="2">
-                    <label class="form-check-label" for="Radios@(i + 1)2">@test.QuestionArray[i].Answers[1]</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios@(i + 1)" id="Radios@(i + 1)3" value="3">
-                    <label class="form-check-label" for="Radios@(i + 1)3">@test.QuestionArray[i].Answers[2]</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios@(i + 1)" id="Radios@(i + 1)4" value="4">
-                    <label class="form-check-label" for="Radios@(i + 1)4">@test.QuestionArray[i].Answers[3]</label>
-                </div>
-                <input checked hidden class="form-check-input" type="radio" name="exampleRadios@(i + 1)" id="Radios@(i + 1)4" value="5">
+    <div class="container">
+        <div class=row>
+            <div class="col-12 col-sm-6 offset-sm-3">
+                <p class="h3">@test.Description</p>
+                <form method="post" name="executionForm">
+                    @for (int i = 0; i < test.NumberOfQuestions; i++)
+                    {
+                        <div class="form-group col-sm-8 offset-sm-2">
+                            <div class="col-8 offset-2 question">
+                                <label name="questionDescription@(i + 1)" id="QuestionDescription">@test.QuestionArray[0].Description</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios@(i + 1)" id="Radios@(i + 1)1" value="1" />
+                                <label class="form-check-label" for="Radios@(i + 1)1">@test.QuestionArray[i].Answers[0]</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios@(i + 1)" id="Radios@(i + 1)2" value="2">
+                                <label class="form-check-label" for="Radios@(i + 1)2">@test.QuestionArray[i].Answers[1]</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios@(i + 1)" id="Radios@(i + 1)3" value="3">
+                                <label class="form-check-label" for="Radios@(i + 1)3">@test.QuestionArray[i].Answers[2]</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios@(i + 1)" id="Radios@(i + 1)4" value="4">
+                                <label class="form-check-label" for="Radios@(i + 1)4">@test.QuestionArray[i].Answers[3]</label>
+                            </div>
+                            <input checked hidden class="form-check-input" type="radio" name="exampleRadios@(i + 1)" id="Radios@(i + 1)4" value="5">
 
+                        </div>
+                    }
+                    <div class="col-12 offset-2 col-sm-6 offset-sm-3">
+                        <label> Осталось времени - </label>
+                        <label id="timer"> @timer.Interval</label>
+                    </div>
+                    <div class="col-12 offset-2 col-sm-6 offset-sm-3">
+                        <button type="submit" class="btn btn-primary">Проверить результат</button>
+                    </div>
+                    
+
+
+                </form>
             </div>
-        }
-        <div>
-            <label id="timer">@timer.Interval</label>
         </div>
-        <button type="submit" class="btn btn-primary">Проверить результат</button>
-    </form>
-    <script src="~/Scripts/timerForTestExecution.js"></script>
+    </div>
+    @section ScriptsAndStyles{
+        <script src="~/Scripts/timerForTestExecution.js"></script>
+        <link href="~/Content/stylesForTestExecution,Creation,AndUpdate.css" rel="stylesheet" />
+    }
+
 }
 else
 {

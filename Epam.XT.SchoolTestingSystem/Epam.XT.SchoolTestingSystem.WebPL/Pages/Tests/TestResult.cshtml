@@ -3,6 +3,7 @@
 @using Epam.XT.SchoolTestingSystem.BLL.Interfaces;
 @{
     Layout = "~/Pages/Layouts/_BasicLayout.cshtml";
+    PageData["Title"] = "Результат теста";
     var _testBLL = DependencyResolver.Instance.testBLL;
     Guid userId = default(Guid);
     Guid testId = default(Guid);
@@ -21,14 +22,14 @@ else
 {
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
-                <h4 class="text">Ваш результат</h4>
+            <div class="col-12 offset-sm-3 col-sm-6 col-md-offset-3 col-md-6">
+                <h4 class="text" style="text-align:center">Ваш результат</h4>
                 <hr />
                 <ul class="resultList" style="list-style:none">
-                    <li class="col-xs-12">Ваш результат: @testResult[0]/@testResult[1] </li>
+                    <li class="col-xs-12" style="text-align:center">Ваш результат: @testResult[0]/@testResult[1] </li>
                 </ul>
                 <div class="buttons">
-                    <div class="col-xs-12 col-sm-6">
+                    <div class="col-xs-12 col-sm-6 offset-sm-3">
                         <a href="~/Pages/index.cshtml" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Перейти на главную страницу</a>
                     </div>
                 </div>
